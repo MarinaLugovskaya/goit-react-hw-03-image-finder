@@ -43,7 +43,10 @@ export default class App extends Component {
     return (
       <>
         <SearchBar onSubmit={this.handleFormSubmit} />
-        <ImageGallery images={this.images} selectImg={this.handleSelectImg} />
+        {/* <ImageGallery
+          images={this.state.images}
+          selectImg={this.handleSelectImg} */}
+        {/* /> */}
         <Button onClick={this.clickMoreBtn} />
       </>
     );
