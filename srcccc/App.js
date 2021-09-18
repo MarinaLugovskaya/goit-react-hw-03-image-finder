@@ -1,11 +1,11 @@
-import { Component } from "react";
-import { fetchImages } from "../services/Api";
-import Button from "./Button/Button";
-import ImageGallery from "./ImageGallery/ImageGallery";
-import Loader from "./Loader/Loader";
-import Modal from "./Modal/Modal";
-import SearchBar from "./Searchbar/Searchbar";
-import css from "../components/Style.module.css";
+import React, { Component } from "react";
+import ImageGallery from "./components/GalleryList/ImageGallery.jsx";
+import SearchBar from "./components/SearchBar/SearchBar.jsx";
+import BtnLoadMore from "./components/BtnLoadMore/BtnLoadMore.jsx";
+import { fetchPicture } from "./components/Services/PixabayAPI";
+import Modal from "./components/Modal/Modal.jsx";
+import "./main.module.css";
+import LoadSpinner from "./components/Loader/Loader.jsx";
 
 class App extends Component {
   state = {
@@ -77,7 +77,7 @@ class App extends Component {
     this.setState({
       isLoading: true,
     });
-    fetchImages(options)
+    fetchPicture(options)
       .then((hits) =>
         this.setState((prevState) => ({
           gallery: [...prevState.gallery, ...hits],
@@ -106,8 +106,8 @@ class App extends Component {
           onClick={this.toggleModal}
           onClickImage={this.onClickGalleryItem}
         />
-        {isLoading && <Loader />}
-        {shouldRenderBtnLoadMore && <Button onClick={this.fechImages} />}
+        {isLoading && <LoadSpinner />}
+        {shouldRenderBtnLoadMore && <BtnLoadMore onClick={this.fechImages} />}
         {showModal && (
           <Modal
             onClickImage={this.backDroppCloseModal}

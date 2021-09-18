@@ -1,11 +1,11 @@
 import React from "react";
-import css from "../Modal/Modal.module.css";
+import style from "./style.module.css";
 import PropTypes from "prop-types";
 
 function Modal({ onClickImage, imageForModal, title, onClick }) {
   return (
-    <div className={css.overlay} onClick={onClickImage}>
-      <div className={css.modal}>
+    <div className={style.overlay} onClick={onClickImage}>
+      <div className={style.modal}>
         <img src={imageForModal} alt={title} />
       </div>
     </div>

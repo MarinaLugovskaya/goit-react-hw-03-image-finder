@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import style from "./style.module.css";
+import css from "../ImageGalleryItem/ImageGalleryItem.module.css";
 
 function ImageGalleryItem({ gallery, onClickGalleryItem }) {
   return (
@@ -8,10 +8,14 @@ function ImageGalleryItem({ gallery, onClickGalleryItem }) {
       {gallery.map(({ id, webformatURL, largeImageURL, tags }) => (
         <li
           key={id}
-          className="ImageGalleryItem"
+          className={css.ImageGalleryItem}
           onClick={() => onClickGalleryItem(largeImageURL, tags)}
         >
-          <img src={webformatURL} alt="" className="ImageGalleryItem_image" />
+          <img
+            src={webformatURL}
+            alt=""
+            className={css.ImageGalleryItem_image}
+          />
         </li>
       ))}
     </>
