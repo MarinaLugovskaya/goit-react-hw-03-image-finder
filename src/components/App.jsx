@@ -5,7 +5,6 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
 import Modal from './Modal/Modal';
 import SearchBar from './Searchbar/Searchbar';
-import scroll from '../services/scroll';
 import css from '../components/Style.module.css';
 
 class App extends Component {
@@ -60,13 +59,6 @@ class App extends Component {
     });
   };
 
-  // scrollTo = () => {
-  //   window.scrollTo({
-  //     top: document.documentElement.scrollHeight,
-  //     behavior: 'smooth',
-  //   });
-  // };
-
   fechImages = () => {
     const { currentPage, searchQuery } = this.state;
     const options = {
@@ -82,6 +74,7 @@ class App extends Component {
       .then(hits =>
         this.setState(prevState => ({
           gallery: [...prevState.gallery, ...hits],
+          currentPage: prevState.currentPage + 1,
         })),
       )
       .then(() =>
