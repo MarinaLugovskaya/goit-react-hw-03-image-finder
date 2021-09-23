@@ -1,22 +1,23 @@
-import { Component } from "react";
-import { fetchImages } from "../services/Api";
-import Button from "./Button/Button";
-import ImageGallery from "./ImageGallery/ImageGallery";
-import Loader from "./Loader/Loader";
-import Modal from "./Modal/Modal";
-import SearchBar from "./Searchbar/Searchbar";
-import css from "../components/Style.module.css";
+import { Component } from 'react';
+import { fetchImages } from '../services/Api';
+import Button from './Button/Button';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Loader from './Loader/Loader';
+import Modal from './Modal/Modal';
+import SearchBar from './Searchbar/Searchbar';
+import scroll from '../services/scroll';
+import css from '../components/Style.module.css';
 
 class App extends Component {
   state = {
     gallery: [],
     currentPage: 1,
-    searchQuery: "",
+    searchQuery: '',
     isLoading: false,
     error: null,
     showModal: false,
-    imageForModal: "",
-    title: "",
+    imageForModal: '',
+    title: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -24,13 +25,13 @@ class App extends Component {
       this.fechImages();
     }
 
-    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener('keydown', this.handleKeyDown);
   }
 
-  handleKeyDown = (e) => {
-    if (e.code === "Escape") {
+  handleKeyDown = e => {
+    if (e.code === 'Escape') {
       this.toggleModal();
-      window.removeEventListener("keydown", this.handleKeyDown);
+      window.removeEventListener('keydown', this.handleKeyDown);
     }
   };
 
@@ -39,7 +40,7 @@ class App extends Component {
     this.setState({ imageForModal: src, title: alt });
   };
 
-  backDroppCloseModal = (event) => {
+  backDroppCloseModal = event => {
     if (event.target === event.currentTarget) {
       this.toggleModal();
     }
@@ -51,7 +52,7 @@ class App extends Component {
     }));
   };
 
-  formSubmitData = (query) => {
+  formSubmitData = query => {
     this.setState({
       searchQuery: query,
       gallery: [],
@@ -59,12 +60,12 @@ class App extends Component {
     });
   };
 
-  scrollTo = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
-  };
+  // scrollTo = () => {
+  //   window.scrollTo({
+  //     top: document.documentElement.scrollHeight,
+  //     behavior: 'smooth',
+  //   });
+  // };
 
   fechImages = () => {
     const { currentPage, searchQuery } = this.state;
@@ -78,17 +79,19 @@ class App extends Component {
       isLoading: true,
     });
     fetchImages(options)
-      .then((hits) =>
-        this.setState((prevState) => ({
+      .then(hits =>
+        this.setState(prevState => ({
           gallery: [...prevState.gallery, ...hits],
-          currentPage: prevState.currentPage + 1,
-        }))
+        })),
       )
-      .catch((error) => this.setState({ error }))
+      .then(() =>
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        }),
+      )
+      .catch(error => this.setState({ error }))
       .finally(() => {
-        {
-          currentPage > 1 && this.scrollTo();
-        }
         this.setState({
           isLoading: false,
         });
