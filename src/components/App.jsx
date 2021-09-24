@@ -74,7 +74,6 @@ class App extends Component {
       .then(hits =>
         this.setState(prevState => ({
           gallery: [...prevState.gallery, ...hits],
-          currentPage: prevState.currentPage + 1,
         })),
       )
       .then(() =>
